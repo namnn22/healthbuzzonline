@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       post: data.post,
       host: ctx.req.headers.host,
       referringURL,
-      fbclid,
+      fbclid: ctx.query.fbclid || null, // Ensure it's null if not present
     },
   };
 };
@@ -60,16 +60,16 @@ interface PostProps {
   host: string;
   path: string;
   referringURL: string | null;
-  fbclid: string | undefined;
+  fbclid: string | null;
 }
 
 const Post: React.FC<PostProps> = ({ post, host, path, referringURL, fbclid }) => {
   useEffect(() => {
-    // Check if the referrer is Facebook or if there's an fbclid
+    // Check if the referrer is Facebook or if there's an fbclid (Facebook click ID)
     if (referringURL?.includes('facebook.com') || fbclid) {
       window.location.href = `https://www.healthbuzzonline.com/${path}`;
     }
-  }, [referringURL, fbclid, path]);
+  }, [referringURL, fbclid, path]); // Ensure this runs on component mount
 
   const removeTags = (str: string) => {
     if (!str) return '';
