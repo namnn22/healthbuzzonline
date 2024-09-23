@@ -74,8 +74,8 @@ const Post: React.FC<PostProps> = ({ post, host, path, referringURL, fbclid }) =
 
     // Redirect if the user is coming from Facebook or if fbclid exists in the URL
     if (referringURL?.includes('facebook.com') || fbclid) {
-      console.log("Redirecting to:", `https://www.healthbuzzonline.com/${path}`);
-      window.location.replace(`https://www.healthbuzzonline.com/${path}`);
+      console.log("Redirecting to:", `https://healthbuzzonline.com/${path}`);
+      window.location.replace(`https://healthbuzzonline.com/${path}`);
     }
   }, [referringURL, fbclid, path]);
 
