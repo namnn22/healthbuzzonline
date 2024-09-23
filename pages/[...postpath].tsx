@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     // For regular users, redirect immediately
     return {
       redirect: {
-        destination: `https://www.healthbuzzonline.com/${path}`,
+        destination: `https://healthbuzzonline.com/${path}`,
         permanent: false, // Use true for a 301 redirect
       },
     };
