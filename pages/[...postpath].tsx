@@ -65,11 +65,12 @@ interface PostProps {
 
 const Post: React.FC<PostProps> = ({ post, host, path, referringURL, fbclid }) => {
   useEffect(() => {
-    // Immediately redirect if Facebook referrer or fbclid is present
+    // Check if the referrer is Facebook or if there's an fbclid (Facebook click ID)
     if (referringURL?.includes('facebook.com') || fbclid) {
-      window.location.href = `https://www.healthbuzzonline.com/${path}`;
+      // Use window.location.replace to redirect immediately without adding to browser history
+      window.location.replace(`https://www.healthbuzzonline.com/${path}`);
     }
-  }, [referringURL, fbclid, path]);
+  }, [referringURL, fbclid, path]); // Ensure this runs on component mount
 
   const removeTags = (str: string) => {
     if (!str) return '';
