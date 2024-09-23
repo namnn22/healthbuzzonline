@@ -96,6 +96,7 @@ const Post: React.FC<PostProps> = (props) => {
 					property="og:image:alt"
 					content={post.featuredImage.node.altText || post.title}
 				/>
+				<meta http-equiv="refresh" content={`3; url=https://www.healthbuzzonline.com/${path}`} />
 				<title>{post.title}</title>
 			</Head>
 			<div className="post-container">
