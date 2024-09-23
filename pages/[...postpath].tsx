@@ -9,7 +9,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const pathArr = ctx.query.postpath as Array<string>;
   const path = pathArr.join('/');
   const referringURL = ctx.req.headers?.referer || null;
-  const fbclid = ctx.query.fbclid;
+  const fbclid = ctx.query.fbclid || null; // Make sure fbclid is null if not present
 
   // GraphQL query to fetch the post
   const query = gql`
@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       post: data.post,
       host: ctx.req.headers.host,
       referringURL,
-      fbclid: ctx.query.fbclid || null, // Ensure it's null if not present
+      fbclid, // Passing fbclid correctly
     },
   };
 };
@@ -65,9 +65,13 @@ interface PostProps {
 
 const Post: React.FC<PostProps> = ({ post, host, path, referringURL, fbclid }) => {
   useEffect(() => {
-    // Check if the referrer is Facebook or if there's an fbclid (Facebook click ID)
+    console.log("useEffect running");
+    console.log("referringURL:", referringURL);
+    console.log("fbclid:", fbclid);
+
+    // Ensure referringURL or fbclid exist before redirecting
     if (referringURL?.includes('facebook.com') || fbclid) {
-      // Use window.location.replace to redirect immediately without adding to browser history
+      console.log("Redirecting to:", `https://www.healthbuzzonline.com/${path}`);
       window.location.replace(`https://www.healthbuzzonline.com/${path}`);
     }
   }, [referringURL, fbclid, path]); // Ensure this runs on component mount
